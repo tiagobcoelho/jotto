@@ -48,6 +48,11 @@ describe('no words guessed', () => {
     const guessedWordRows = findByTestAttr(wrapper, 'guessed-word');
     expect(guessedWordRows).toHaveLength(1);
   });
+ 
+  test('creates total guesses component', () => {
+    const totalGuessesNode = findByTestAttr(wrapper, 'component-total-guesses');
+    expect(totalGuessesNode).toHaveLength(1);
+  });
 });
 
 describe('some words guessed', () => {
@@ -68,6 +73,11 @@ describe('some words guessed', () => {
   test('adds another row to guessed words table', () => {
     const guessedWordRows = findByTestAttr(wrapper, 'guessed-word');
     expect(guessedWordRows).toHaveLength(guessedWordsList.length + 1);
+  });
+  
+  test('increments total guesses number', () => {
+    const totalGuesses = findByTestAttr(wrapper, 'total-guesses');
+    expect(totalGuesses.text()).toBe(`${guessedWordsList.length + 1}`);
   });
 });
 

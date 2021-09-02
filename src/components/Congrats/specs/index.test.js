@@ -26,11 +26,22 @@ test('renders no text when "success" prop is false', () => {
   expect(component.text()).toBe('');
 });
 
-test('renders non-empty congrats message when "success" prop is true', () => {
-  const wrapper = setup({ success: true });
-  const message = findByTestAttr(wrapper, 'component-congrats');
-  expect(message.text().length).not.toBe(0);
-});
+describe('success is true', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = setup({ success: true });
+  });
+
+  test('renders non-empty congrats message', () => {
+    const message = findByTestAttr(wrapper, 'component-congrats');
+    expect(message.text().length).not.toBe(0);
+  });
+  
+  test('renders `new word` button', () => {
+    const newWordButton = findByTestAttr(wrapper, 'new-word');
+    expect(newWordButton.length).toBe(1);
+  });
+})
 
 test('does not throw warning with expected props', () => {
   const expectedProps = { success: false };

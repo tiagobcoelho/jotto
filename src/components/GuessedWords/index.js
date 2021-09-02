@@ -1,17 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TotalGuesses from '../TotalGuesses';
 
 export default function GuessedWords(props) {
+  const { guessedWords } = props;
   let contents
-  if(props.guessedWords.length === 0) {
+  const totalGuesses = guessedWords.length ? guessedWords.length : 0;
+  if(guessedWords.length === 0) {
     contents = (
       <span data-test="guess-instructions">
         Try to guess the secret word!
       </span>
     )
   } else {
-    const guessedWordsRows = props.guessedWords.map((word, index) => (
+    const guessedWordsRows = guessedWords.map((word, index) => (
       <tr data-test="guessed-word" key={index}>
+        <td>{index + 1}</td>
         <td>{word.guessedWord}</td>
         <td>{word.letterMatchCount}</td>
       </tr>
@@ -22,6 +26,7 @@ export default function GuessedWords(props) {
         <table className="table table-sm">
           <thead className="thead-light">
             <tr>
+              <th>#</th>
               <th>Guess</th>
               <th>Matching Letters</th>
             </tr>
@@ -30,6 +35,7 @@ export default function GuessedWords(props) {
             {guessedWordsRows}
           </tbody>
         </table>
+        <TotalGuesses totalGuesses={totalGuesses}/>
       </div>
     )
   }

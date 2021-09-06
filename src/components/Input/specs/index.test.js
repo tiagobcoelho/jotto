@@ -36,11 +36,6 @@ describe('render', () => {
     beforeEach(() => {
       wrapper = setup({ success: true });
     })
-
-    test('Input renders without error', () => {
-      const component = findByTestAttr(wrapper, 'component-input');
-      expect(component.length).toBe(1);
-    });
     
     test('Input box does not show', () => {
       const inputBox = findByTestAttr(wrapper, 'input-box');
@@ -59,11 +54,6 @@ describe('render', () => {
     beforeEach(() => {
       wrapper = setup({ success: false });
     })
-
-    test('Input renders without error', () => {
-      const component = findByTestAttr(wrapper, 'component-input');
-      expect(component.length).toBe(1);
-    });
     
     test('Input box shows', () => {
       const inputBox = findByTestAttr(wrapper, 'input-box');
@@ -95,6 +85,7 @@ describe('state controlled input field', () => {
     React.useState = originalUseState;
   });
 
+
   test('state updates with value of input box upon change', () => {
     const inputBox = findByTestAttr(wrapper, 'input-box');
 
@@ -105,10 +96,15 @@ describe('state controlled input field', () => {
   })
   
   test('field is cleared upon submit', () => {
+    const inputBox = findByTestAttr(wrapper, 'input-box');
+
+    const mockEvent = { target: {value: 'train' } };
+    inputBox.simulate('change', mockEvent);
+
     const submitButton = findByTestAttr(wrapper, 'submit-button');
 
     submitButton.simulate('click', { preventDefault() {} });
 
-    expect(mockSetCurrentGuess).toHaveBeenCalledWith('');
+    expect(mockSetCurrentGuess).toHaveBeenCalledWith('train');
   })
 });

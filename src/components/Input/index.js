@@ -10,11 +10,7 @@ export default function Input({ secretWord }) {
   const success = useSelector(state => state.success);
 
   if(success) {
-    return (
-      <div data-test="component-input">
-
-      </div>
-    )
+    return null;
   }
   return (
     <div data-test="component-input">
@@ -28,6 +24,7 @@ export default function Input({ secretWord }) {
           onChange={(e) => setCurrentGuess(e.target.value)} 
         />
         <button
+          disabled={!currentGuess.length}
           data-test="submit-button"
           className="btn btn-primary mb-2"
           onClick={(e) => {

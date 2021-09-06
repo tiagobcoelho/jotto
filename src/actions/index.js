@@ -5,6 +5,7 @@ export const actionTypes = {
   CORRECT_GUESS: 'CORRECT_GUESS',
   GUESS_WORD: 'GUESS_WORD',
   SET_SECRET_WORD: 'SET_SECRET_WORD',
+  RESET_SECRET_WORD: 'RESET_SECRET_WORD',
 };
 
 /**
@@ -30,6 +31,16 @@ export const guessWord = (guessedWord) => {
   };
 };
 
+const fetchSecretWord = (dispatch) => {
+  return axios.get('http://localhost:3030')
+    .then(response => {
+      dispatch({
+        type: actionTypes.SET_SECRET_WORD,
+        payload: response.data
+      })
+    });
+};
+
 /**
  * Returns Redux Thunk function that initiates an axios request
  * and dispatches the response as a 'SET_SECRET_WORD' action
@@ -37,14 +48,23 @@ export const guessWord = (guessedWord) => {
  * @returns {function} - Redux Thunk function.
  */
 export const getSecretWord = () => {
+  return fetchSecretWord;
+};
+
+/**
+ * Returns Redux Thunk function that dispatches 'RESET_SECRET_WORD',
+ * resets all the state, and dispatches the response as a 'SET_SECRET_WORD' action
+ * 
+ * @function resetSecretWord
+ * @returns {function} - Redux Thunk function.
+ */
+export const resetGame = () => {
   return function(dispatch) {
-    return axios.get('http://localhost:3030')
-      .then(response => {
-        dispatch({
-          type: actionTypes.SET_SECRET_WORD,
-          payload: response.data
-        })
-      });
+    dispatch({
+      type: actionTypes.RESET_SECRET_WORD
+    });
+
+    return fetchSecretWord(dispatch);
   };
-  }
+}
 

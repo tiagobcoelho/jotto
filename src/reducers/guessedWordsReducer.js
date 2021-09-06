@@ -9,6 +9,8 @@ export default (state=[], action) => {
   switch(action.type) {
     case actionTypes.GUESS_WORD:
       return [...state, action.payload];
+    case actionTypes.RESET_SECRET_WORD:
+      return [];
     default:
       return state;
   };

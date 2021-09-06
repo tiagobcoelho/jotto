@@ -36,12 +36,7 @@ describe('success is true', () => {
     const message = findByTestAttr(wrapper, 'component-congrats');
     expect(message.text().length).not.toBe(0);
   });
-  
-  test('renders `new word` button', () => {
-    const newWordButton = findByTestAttr(wrapper, 'new-word');
-    expect(newWordButton.length).toBe(1);
-  });
-})
+});
 
 test('does not throw warning with expected props', () => {
   const expectedProps = { success: false };
